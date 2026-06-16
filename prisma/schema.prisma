@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model WeddingConfig {
+  id              Int      @id @default(1)
+  groomName       String   @default("David")
+  groomPhoto      String?
+  groomParents    String   @default("Putra dari Bapak Fulan & Ibu Fulanah")
+  groomIG         String   @default("@david_ig")
+  brideName       String   @default("Maria")
+  bridePhoto      String?
+  brideParents    String   @default("Putri dari Bapak Fulan & Ibu Fulanah")
+  brideIG         String   @default("@maria_ig")
+  akadDate        DateTime @default(now())
+  akadLocation    String   @default("Masjid Agung, Jl. Sudirman No. 1")
+  resepsiDate     DateTime @default(now())
+  resepsiLocation String   @default("Gedung Serbaguna, Jl. Gatot Subroto No. 2")
+  mapsLink        String   @default("https://maps.google.com")
+  bankName        String   @default("BCA")
+  bankAccount     String   @default("1234567890")
+  bankHolder      String   @default("David")
+  galleryPhotos   String?  // Akan menyimpan JSON string array link gambar
+  musicUrl        String?  // Akan menyimpan URL backsound lagu
+  updatedAt       DateTime @updatedAt
+}
+
+model Guest {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  isRSVP    Boolean  @default(false)
+  status    String?  // "Hadir", "Tidak Hadir"
+  wish      String?
+  createdAt DateTime @default(now())
+}
+
+model Wish {
+  id        Int      @id @default(autoincrement())
+  name      String
+  status    String
+  message   String
+  createdAt DateTime @default(now())
+}
