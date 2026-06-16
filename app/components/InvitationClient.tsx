@@ -186,7 +186,8 @@ export default function InvitationClient({ config, initialWishes, guestName }: {
   const [rsvpStatus, setRsvpStatus] = useState('');
   const [rsvpMessage, setRsvpMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [copySuccess1, setCopySuccess1] = useState(false);
+  const [copySuccess2, setCopySuccess2] = useState(false);
 
   useEffect(() => {
     if (!isOpen) document.body.classList.add('locked');
@@ -254,9 +255,16 @@ export default function InvitationClient({ config, initialWishes, guestName }: {
     setIsPlaying(!isPlaying);
   };
 
-  const copyRekening = () => {
+  const copyRekening1 = () => {
     navigator.clipboard.writeText(liveConfig.bankAccount).then(() => {
-      setCopySuccess(true); setTimeout(() => setCopySuccess(false), 3000);
+      setCopySuccess1(true); setTimeout(() => setCopySuccess1(false), 3000);
+      fireConfetti();
+    });
+  };
+
+  const copyRekening2 = () => {
+    navigator.clipboard.writeText(liveConfig.bankAccount2).then(() => {
+      setCopySuccess2(true); setTimeout(() => setCopySuccess2(false), 3000);
       fireConfetti();
     });
   };
@@ -533,23 +541,45 @@ export default function InvitationClient({ config, initialWishes, guestName }: {
               Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberikan tanda kasih untuk kami, dapat melalui:
             </motion.p>
             
-            <TiltCard>
-              <motion.div variants={fadeInUp} className="bg-white p-8 rounded-[2rem] border border-primary/10 shadow-[0_20px_40px_rgba(0,0,0,0.06)] text-left relative overflow-hidden">
-                <div className="absolute -right-10 -top-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
-                <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
-                
-                <h3 className="font-playfair text-2xl text-primary font-bold mb-3 relative z-10">{liveConfig.bankName}</h3>
-                <p className="text-3xl tracking-widest font-mono text-stone-700 mb-2 relative z-10">{liveConfig.bankAccount}</p>
-                <p className="text-sm text-stone-400 mb-8 uppercase tracking-[0.2em] relative z-10 font-light">a.n. {liveConfig.bankHolder}</p>
-                
-                <button 
-                  onClick={copyRekening}
-                  className="relative z-10 flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-stone-50 hover:bg-primary text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-widest border border-primary/10"
-                >
-                  {copySuccess ? <><CheckCircle2 size={18} /> Tersalin!</> : <><Copy size={18} /> Salin Nomor Rekening</>}
-                </button>
-              </motion.div>
-            </TiltCard>
+            <div className="flex flex-col gap-6">
+              <TiltCard>
+                <motion.div variants={fadeInUp} className="bg-white p-8 rounded-[2rem] border border-primary/10 shadow-[0_20px_40px_rgba(0,0,0,0.06)] text-left relative overflow-hidden">
+                  <div className="absolute -right-10 -top-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+                  <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
+                  
+                  <h3 className="font-playfair text-2xl text-primary font-bold mb-3 relative z-10">{liveConfig.bankName}</h3>
+                  <p className="text-3xl tracking-widest font-mono text-stone-700 mb-2 relative z-10">{liveConfig.bankAccount}</p>
+                  <p className="text-sm text-stone-400 mb-8 uppercase tracking-[0.2em] relative z-10 font-light">a.n. {liveConfig.bankHolder}</p>
+                  
+                  <button 
+                    onClick={copyRekening1}
+                    className="relative z-10 flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-stone-50 hover:bg-primary text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-widest border border-primary/10"
+                  >
+                    {copySuccess1 ? <><CheckCircle2 size={18} /> Tersalin!</> : <><Copy size={18} /> Salin Nomor Rekening</>}
+                  </button>
+                </motion.div>
+              </TiltCard>
+
+              {liveConfig.bankAccount2 && (
+                <TiltCard>
+                  <motion.div variants={fadeInUp} className="bg-white p-8 rounded-[2rem] border border-primary/10 shadow-[0_20px_40px_rgba(0,0,0,0.06)] text-left relative overflow-hidden">
+                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+                    <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
+                    
+                    <h3 className="font-playfair text-2xl text-primary font-bold mb-3 relative z-10">{liveConfig.bankName2}</h3>
+                    <p className="text-3xl tracking-widest font-mono text-stone-700 mb-2 relative z-10">{liveConfig.bankAccount2}</p>
+                    <p className="text-sm text-stone-400 mb-8 uppercase tracking-[0.2em] relative z-10 font-light">a.n. {liveConfig.bankHolder2}</p>
+                    
+                    <button 
+                      onClick={copyRekening2}
+                      className="relative z-10 flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-stone-50 hover:bg-primary text-primary hover:text-white transition-colors text-sm font-bold uppercase tracking-widest border border-primary/10"
+                    >
+                      {copySuccess2 ? <><CheckCircle2 size={18} /> Tersalin!</> : <><Copy size={18} /> Salin Nomor Rekening</>}
+                    </button>
+                  </motion.div>
+                </TiltCard>
+              )}
+            </div>
           </motion.div>
         </section>
 

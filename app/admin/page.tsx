@@ -455,17 +455,38 @@ export default function AdminDashboard() {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
                 <h3 className="text-lg font-semibold mb-6 flex items-center gap-2 border-b border-gray-100 pb-4"><Gift className="text-primary"/> Amplop Digital</h3>
                 <div className="grid md:grid-cols-2 gap-6 max-w-2xl">
+                  {/* Rekening 1 */}
+                  <div className="md:col-span-2">
+                    <h4 className="font-semibold text-gray-700 mt-2 border-b pb-2">Rekening 1</h4>
+                  </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Bank / E-Wallet</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Bank / E-Wallet 1</label>
                     <input name="bankName" value={config?.bankName || ''} onChange={handleChange} placeholder="BCA / Mandiri / GoPay" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Nomor Rekening</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nomor Rekening 1</label>
                     <input name="bankAccount" value={config?.bankAccount || ''} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-mono" />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Pemilik Rekening</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Pemilik Rekening 1</label>
                     <input name="bankHolder" value={config?.bankHolder || ''} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" />
+                  </div>
+                  
+                  {/* Rekening 2 */}
+                  <div className="md:col-span-2">
+                    <h4 className="font-semibold text-gray-700 mt-4 border-b pb-2">Rekening 2 (Opsional)</h4>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Bank / E-Wallet 2</label>
+                    <input name="bankName2" value={config?.bankName2 || ''} onChange={handleChange} placeholder="BNI / OVO / DANA" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nomor Rekening 2</label>
+                    <input name="bankAccount2" value={config?.bankAccount2 || ''} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-mono" />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Pemilik Rekening 2</label>
+                    <input name="bankHolder2" value={config?.bankHolder2 || ''} onChange={handleChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" />
                   </div>
                 </div>
               </motion.div>

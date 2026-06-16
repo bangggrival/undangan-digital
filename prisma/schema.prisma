@@ -29,6 +29,9 @@ model WeddingConfig {
   bankName        String   @default("BCA")
   bankAccount     String   @default("1234567890")
   bankHolder      String   @default("David")
+  bankName2       String?
+  bankAccount2    String?
+  bankHolder2     String?
   galleryPhotos   String?  // Akan menyimpan JSON string array link gambar
   musicUrl        String?  // Akan menyimpan URL backsound lagu
   updatedAt       DateTime @updatedAt
