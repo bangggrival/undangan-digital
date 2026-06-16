@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   UserSquare2, Gift, ImageIcon, Users, MessageSquare, 
   Upload, Trash2, Copy, Plus, Save, Loader2, CheckCircle2,
+  Menu, X, LayoutDashboard, XCircle, LogOut
 } from 'lucide-react';
 
 const resizeImageToBase64 = (file: File, maxWidth = 800): Promise<string> => {
