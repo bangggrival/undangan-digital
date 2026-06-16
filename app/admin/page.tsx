@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   UserSquare2, Gift, ImageIcon, Users, MessageSquare, 
   Upload, Trash2, Copy, Plus, Save, Loader2, CheckCircle2,
-  Menu, X, LayoutDashboard, XCircle
+  Menu, X, LayoutDashboard, XCircle, LogOut
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -233,8 +233,17 @@ export default function AdminDashboard() {
             </motion.button>
           ))}
         </nav>
-        <div className="p-4 border-t border-gray-100 text-xs text-center text-gray-400">
-          Dashboard v1.0
+        <div className="p-4 border-t border-gray-100">
+          <button 
+            onClick={async () => {
+              await fetch('/api/auth/logout', { method: 'POST' });
+              window.location.href = '/login';
+            }}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-red-600 hover:bg-red-50 transition-colors font-medium text-sm"
+          >
+            <LogOut size={18} />
+            Keluar (Logout)
+          </button>
         </div>
       </aside>
 

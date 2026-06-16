@@ -61,8 +61,8 @@ const AnimatedText = ({ text, className, delay = 0 }: { text: string, className?
   };
 
   const child = {
-    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", damping: 12, stiffness: 100 } },
-    hidden: { opacity: 0, y: 15, filter: "blur(5px)", transition: { type: "spring", damping: 12, stiffness: 100 } },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring" as const, damping: 12, stiffness: 100 } },
+    hidden: { opacity: 0, y: 15, filter: "blur(5px)", transition: { type: "spring" as const, damping: 12, stiffness: 100 } },
   };
 
   return (
