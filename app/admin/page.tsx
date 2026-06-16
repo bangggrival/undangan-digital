@@ -5,8 +5,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   UserSquare2, Gift, ImageIcon, Users, MessageSquare, 
   Upload, Trash2, Copy, Plus, Save, Loader2, CheckCircle2,
-  Menu, X, LayoutDashboard, XCircle, LogOut
 } from 'lucide-react';
+
+const resizeImageToBase64 = (file: File, maxWidth = 800): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ratio = maxWidth / img.width;
+        const width = img.width > maxWidth ? maxWidth : img.width;
+        const height = img.width > maxWidth ? img.height * ratio : img.height;
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.8));
+      };
+      img.onerror = reject;
+    };
+    reader.onerror = reject;
+  });
+};
 
 export default function AdminDashboard() {
   const [config, setConfig] = useState<any>(null);
@@ -56,20 +79,25 @@ export default function AdminDashboard() {
     
     setUploading(true);
     const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
 
     try {
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (data.success) {
-        setConfig({ ...config, [fieldName]: data.url });
+      if (file.type.startsWith('image/')) {
+        const base64 = await resizeImageToBase64(file);
+        setConfig({ ...config, [fieldName]: base64 });
       } else {
-        alert('Gagal mengupload file.');
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+          setConfig({ ...config, [fieldName]: data.url });
+        } else {
+          alert('Gagal mengupload file (Gunakan URL jika di Vercel).');
+        }
       }
     } catch (err) {
       console.error(err);
-      alert('Terjadi kesalahan saat mengupload.');
+      alert('Terjadi kesalahan saat memproses file.');
     } finally {
       setUploading(false);
     }
@@ -81,22 +109,21 @@ export default function AdminDashboard() {
     setUploading(true);
     const newPhotos = [...(config.galleryPhotos || [])];
 
-    for (let i = 0; i < e.target.files.length; i++) {
-        const file = e.target.files[i];
-        const formData = new FormData();
-        formData.append('file', file);
-
-        try {
-            const res = await fetch('/api/upload', { method: 'POST', body: formData });
-            const data = await res.json();
-            if (data.success) newPhotos.push(data.url);
-        } catch (err) {
-            console.error(err);
-        }
+    try {
+      for (let i = 0; i < e.target.files.length; i++) {
+          const file = e.target.files[i];
+          if (file.type.startsWith('image/')) {
+            const base64 = await resizeImageToBase64(file);
+            newPhotos.push(base64);
+          }
+      }
+      setConfig({ ...config, galleryPhotos: newPhotos });
+    } catch (err) {
+      console.error(err);
+      alert('Gagal memproses gambar galeri.');
+    } finally {
+      setUploading(false);
     }
-
-    setConfig({ ...config, galleryPhotos: newPhotos });
-    setUploading(false);
   };
 
   const removeGalleryPhoto = (index: number) => {
@@ -448,9 +475,17 @@ export default function AdminDashboard() {
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="space-y-8">
                 <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><ImageIcon className="text-primary"/> Musik Latar (Backsound)</h3>
-                  <p className="text-sm text-gray-500 mb-6">Unggah file audio MP3 untuk diputar secara otomatis di latar belakang.</p>
+                  <p className="text-sm text-gray-500 mb-6">Unggah file audio MP3 atau masukkan link URL audio untuk diputar secara otomatis di latar belakang.</p>
                   
                   <div className="flex flex-col gap-4 max-w-md">
+                    <input 
+                      type="text" 
+                      name="musicUrl" 
+                      value={config.musicUrl || ''} 
+                      onChange={handleChange}
+                      placeholder="Atau tempel Link URL Audio (MP3) di sini..."
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                    />
                     <label className="cursor-pointer bg-white px-4 py-3 border-2 border-dashed border-gray-200 rounded-xl text-sm font-medium hover:border-primary transition-colors flex items-center justify-center gap-2">
                       <Upload size={18} /> Pilih File MP3
                       <input type="file" accept="audio/*" className="hidden" onChange={(e) => handleFileUpload(e, 'musicUrl')} disabled={uploading} />
