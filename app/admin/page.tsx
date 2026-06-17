@@ -186,7 +186,7 @@ export default function AdminDashboard() {
   
   const handleCopyLink = (guest: any) => {
       const fullLink = `${window.location.origin}/?to=${guest.slug}`;
-      const text = `Kepada Yth. ${guest.name},\n\nTanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\n\nBerikut link undangan kami:\n${fullLink}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.\nTerima kasih.`;
+      const text = `Kepada Yth. ${guest.name},\n\nTanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.\nTerima kasih.\n\nBuka undangan:\n${fullLink}`;
       navigator.clipboard.writeText(text);
       
       setCopiedId(guest.id);
