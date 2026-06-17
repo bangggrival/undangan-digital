@@ -369,7 +369,7 @@ export default function InvitationClient({ config, initialWishes, guestName }: {
             <AnimatedText text={liveConfig.brideName.split(' ')[0]} className="font-great-vibes text-6xl md:text-7xl text-primary block mb-2 drop-shadow-sm" delay={0.1} />
             <motion.span variants={fadeInUp} className="font-great-vibes text-accent text-5xl inline-block mx-4 drop-shadow-sm">&</motion.span>
             <AnimatedText text={liveConfig.groomName.split(' ')[0]} className="font-great-vibes text-6xl md:text-7xl text-primary block mb-10 drop-shadow-sm" delay={0.3} />
-            <motion.p variants={fadeInUp} className="font-playfair text-lg text-primary font-bold tracking-widest uppercase border-y border-accent/40 py-4 max-w-[280px] mx-auto bg-white/40 backdrop-blur-sm rounded-xl">{formatDate(liveConfig.akadDate)}</motion.p>
+            <motion.p variants={fadeInUp} className="font-playfair text-lg text-primary font-bold tracking-widest uppercase border-y border-accent/40 py-4 max-w-[280px] mx-auto bg-white/40 backdrop-blur-sm rounded-xl">{formatDate(liveConfig.resepsiDate)}</motion.p>
           </motion.div>
         </section>
 
