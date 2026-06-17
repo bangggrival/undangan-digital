@@ -12,8 +12,8 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
   if (!config) return { title: 'Undangan Pernikahan' };
 
-  let imageUrl = '';
-  if (config.galleryPhotos) {
+  let imageUrl = config.ogImage || '';
+  if (!imageUrl && config.galleryPhotos) {
     try {
       const photos = typeof config.galleryPhotos === 'string' ? JSON.parse(config.galleryPhotos) : config.galleryPhotos;
       if (photos.length > 0) imageUrl = photos[0];

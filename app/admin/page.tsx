@@ -522,6 +522,28 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><ImageIcon className="text-primary"/> Foto Thumbnail WhatsApp (Link Preview)</h3>
+                  <p className="text-sm text-gray-500 mb-6">Foto ini akan muncul secara otomatis saat Anda membagikan link undangan ini di WhatsApp atau Sosial Media lainnya. Gunakan foto berukuran kotak atau landscape.</p>
+                  
+                  <div className="flex flex-col items-center p-6 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 hover:bg-gray-50 transition-colors md:w-1/2">
+                    <div className="w-full aspect-video rounded-xl bg-gray-200 mb-6 shadow-inner overflow-hidden border-4 border-white flex items-center justify-center">
+                      {config?.ogImage ? (
+                        <img src={config.ogImage} alt="Thumbnail WA" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="flex flex-col items-center text-gray-400 gap-2">
+                          <ImageIcon size={32}/>
+                          <span className="text-xs">Belum ada foto khusus</span>
+                        </div>
+                      )}
+                    </div>
+                    <label className="cursor-pointer bg-white px-6 py-3 border border-gray-200 rounded-xl text-sm font-medium hover:border-primary hover:text-primary transition-colors flex items-center gap-2 shadow-sm">
+                      <Upload size={16} /> Pilih Foto Thumbnail
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => handleFileUpload(e, 'ogImage')} disabled={uploading} />
+                    </label>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
                   <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><ImageIcon className="text-primary"/> Galeri Pre-Wedding</h3>
                   <p className="text-sm text-gray-500 mb-6">Pilih beberapa foto sekaligus untuk menambahkannya ke galeri. Foto terbaik memiliki rasio portrait.</p>
                   

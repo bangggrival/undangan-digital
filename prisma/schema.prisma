@@ -34,6 +34,7 @@ model WeddingConfig {
   bankHolder2     String?
   galleryPhotos   String?  // Akan menyimpan JSON string array link gambar
   musicUrl        String?  // Akan menyimpan URL backsound lagu
+  ogImage         String?  // Akan menyimpan URL khusus untuk thumbnail WA/Share
   updatedAt       DateTime @updatedAt
 }
 
