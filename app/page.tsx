@@ -27,7 +27,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     openGraph: {
       title: `The Wedding of ${config.brideName.split(' ')[0]} & ${config.groomName.split(' ')[0]}`,
       description: `Kepada Yth. ${guestName}, kami mengundang Anda untuk hadir di acara pernikahan kami.`,
-      images: imageUrl ? [imageUrl] : [],
+      images: imageUrl ? ['/api/og-image'] : [],
     },
   }
 }
