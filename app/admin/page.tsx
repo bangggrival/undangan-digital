@@ -156,13 +156,24 @@ export default function AdminDashboard() {
     dataToSave.resepsiDate = new Date(dataToSave.resepsiDate).toISOString();
     dataToSave.galleryPhotos = JSON.stringify(dataToSave.galleryPhotos);
 
-    await fetch('/api/config', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dataToSave),
-    });
-    setSaving(false);
-    alert('Konfigurasi berhasil disimpan!');
+    try {
+      const res = await fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataToSave),
+      });
+      
+      if (!res.ok) {
+        alert('Gagal menyimpan! Ukuran file lagu/foto mungkin terlalu besar (Maksimal 3-4 MB untuk Vercel). Gunakan URL eksternal jika lagu terlalu besar.');
+      } else {
+        alert('Konfigurasi berhasil disimpan!');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Terjadi kesalahan jaringan saat menyimpan konfigurasi.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleAddGuest = async (e: React.FormEvent) => {
