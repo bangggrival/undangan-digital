@@ -85,6 +85,19 @@ export default function AdminDashboard() {
       if (file.type.startsWith('image/')) {
         const base64 = await resizeImageToBase64(file);
         setConfig({ ...config, [fieldName]: base64 });
+      } else if (file.type.startsWith('audio/')) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setConfig({ ...config, [fieldName]: reader.result });
+          setUploading(false);
+        };
+        reader.onerror = (err) => {
+          console.error(err);
+          alert('Gagal membaca file audio.');
+          setUploading(false);
+        };
+        return; // Prevent finally block from setting uploading to false prematurely
       } else {
         const formData = new FormData();
         formData.append('file', file);
@@ -99,9 +112,10 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error(err);
       alert('Terjadi kesalahan saat memproses file.');
-    } finally {
-      setUploading(false);
     }
+    
+    // Only reset uploading here for non-audio paths
+    setUploading(false);
   };
 
   const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
