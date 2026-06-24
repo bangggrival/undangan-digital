@@ -228,7 +228,7 @@ export default function InvitationClient({ config, initialWishes, guestName }: {
   }, []);
 
   useEffect(() => {
-    const weddingDate = new Date(liveConfig.akadDate);
+    const weddingDate = new Date(liveConfig.resepsiDate);
     const updateCountdown = () => {
       const now = new Date().getTime();
       const distance = weddingDate.getTime() - now;
@@ -242,7 +242,7 @@ export default function InvitationClient({ config, initialWishes, guestName }: {
     const interval = setInterval(updateCountdown, 1000);
     updateCountdown();
     return () => clearInterval(interval);
-  }, [liveConfig.akadDate]);
+  }, [liveConfig.resepsiDate]);
 
   const handleOpen = () => {
     setIsOpen(true);
